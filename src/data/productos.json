@@ -1,0 +1,27 @@
+[
+  {
+    "nombre": "Nombre del producto 1",
+    "descripcion": "Escribe aquí una descripción corta y verdadera de tu producto.",
+    "precio": 12.5,
+    "imagen": "productos/producto-1.svg",
+    "etiqueta": "Nuevo"
+  },
+  {
+    "nombre": "Nombre del producto 2",
+    "descripcion": "Máximo 110 caracteres: qué es, de qué está hecho o para qué sirve.",
+    "precio": 8,
+    "imagen": "productos/producto-2.svg"
+  },
+  {
+    "nombre": "Nombre del producto 3",
+    "descripcion": "Cuenta lo más importante en una sola frase.",
+    "precio": 15,
+    "imagen": "productos/producto-3.svg"
+  },
+  {
+    "nombre": "Nombre del producto 4",
+    "descripcion": "Recuerda: cada producto lleva su foto real y su precio en soles.",
+    "precio": 20,
+    "imagen": "productos/producto-4.svg"
+  }
+]

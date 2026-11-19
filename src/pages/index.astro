@@ -1,0 +1,99 @@
+---
+import Base from '../layouts/Base.astro';
+import { marca, productos, url, precio, enlaceWhatsApp } from '../lib/datos';
+
+const { portada, nosotros, contacto } = marca;
+const whatsappGeneral = enlaceWhatsApp(contacto.whatsapp, contacto.mensaje);
+const pedir = (nombre: string, valor: number) =>
+  enlaceWhatsApp(contacto.whatsapp, `Hola, quiero pedir: ${nombre} (${precio(valor)})`);
+---
+<Base titulo={`${marca.nombre} | ${marca.eslogan}`} descripcion={portada.subtitulo}>
+  <header class="encabezado">
+    <div class="contenedor">
+      <a class="marca" href="#inicio">
+        <img src={url(marca.logo)} alt="" width="48" height="48" />
+        <span>{marca.nombre}</span>
+      </a>
+      <nav class="menu" aria-label="Principal">
+        <a href="#productos">Productos</a>
+        <a href="#nosotros">Nosotros</a>
+        <a href="#contacto">Contacto</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="portada" id="inicio">
+      <div class="contenedor">
+        <div class="portada-texto">
+          <h1>{portada.titulo}</h1>
+          <p>{portada.subtitulo}</p>
+          <a class="boton" href="#productos">{portada.textoBoton}</a>
+        </div>
+        <div class="portada-imagen">
+          <img src={url(portada.imagen)} alt={`Productos de ${marca.nombre}`} width="800" height="600" />
+        </div>
+      </div>
+    </section>
+
+    <section class="seccion" id="productos">
+      <div class="contenedor">
+        <h2>Nuestros productos</h2>
+        <ul class="rejilla">
+          {productos.map((p) => (
+            <li class="producto">
+              <div class="producto-foto">
+                <img src={url(p.imagen)} alt={p.nombre} width="800" height="600" loading="lazy" />
+                {p.etiqueta && <span class="etiqueta">{p.etiqueta}</span>}
+              </div>
+              <div class="producto-cabecera">
+                <h3>{p.nombre}</h3>
+                <span class="precio">{precio(p.precio)}</span>
+              </div>
+              <p>{p.descripcion}</p>
+              <a class="boton boton-borde" href={pedir(p.nombre, p.precio)} target="_blank" rel="noopener">
+                Pedir por WhatsApp
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+
+    <section class="seccion nosotros" id="nosotros">
+      <div class="contenedor">
+        <h2>{nosotros.titulo}</h2>
+        <div>
+          <p>{nosotros.texto}</p>
+          {nosotros.puntos.length > 0 && (
+            <ul class="puntos">
+              {nosotros.puntos.map((punto) => <li>{punto}</li>)}
+            </ul>
+          )}
+        </div>
+      </div>
+    </section>
+
+    <section class="contacto" id="contacto">
+      <div class="contenedor">
+        <h2>Escríbenos y coordinamos tu pedido</h2>
+        <p>{contacto.horario}</p>
+        <a class="boton boton-claro" href={whatsappGeneral} target="_blank" rel="noopener">
+          Escríbenos por WhatsApp
+        </a>
+        {(contacto.instagram || contacto.facebook) && (
+          <p class="redes">
+            {contacto.instagram && <a href={contacto.instagram} target="_blank" rel="noopener">Instagram</a>}
+            {contacto.facebook && <a href={contacto.facebook} target="_blank" rel="noopener">Facebook</a>}
+          </p>
+        )}
+      </div>
+    </section>
+  </main>
+
+  <footer class="pie">
+    <div class="contenedor">
+      <p>© {new Date().getFullYear()} {marca.nombre}. Proyecto escolar de Educación para el Trabajo.</p>
+    </div>
+  </footer>
+</Base>

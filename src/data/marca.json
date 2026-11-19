@@ -1,0 +1,38 @@
+{
+  "nombre": "Mi Emprendimiento",
+  "eslogan": "Escribe aquí tu eslogan",
+  "logo": "logo.svg",
+  "colores": {
+    "principal": "#1F6F5B",
+    "secundario": "#F4B942",
+    "fondo": "#F6F8F7",
+    "texto": "#1B2430"
+  },
+  "fuentes": {
+    "titulo": "Bricolage Grotesque",
+    "cuerpo": "Figtree"
+  },
+  "esquinas": "suaves",
+  "portada": {
+    "titulo": "Escribe aquí la frase principal de tu emprendimiento",
+    "subtitulo": "Cuenta en una o dos líneas qué vendes y por qué es especial.",
+    "imagen": "productos/producto-1.svg",
+    "textoBoton": "Ver productos"
+  },
+  "nosotros": {
+    "titulo": "Quiénes somos",
+    "texto": "Somos estudiantes de secundaria y creamos este emprendimiento durante el curso de Educación para el Trabajo. Aquí cuentas cómo nació tu idea y qué problema resuelve.",
+    "puntos": [
+      "Productos hechos con cuidado",
+      "Precios justos",
+      "Atención directa por WhatsApp"
+    ]
+  },
+  "contacto": {
+    "whatsapp": "51900000000",
+    "mensaje": "Hola, quiero más información sobre sus productos",
+    "horario": "Lunes a viernes, de 3:00 p. m. a 6:00 p. m.",
+    "instagram": "",
+    "facebook": ""
+  }
+}

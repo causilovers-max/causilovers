@@ -1,0 +1,23 @@
+---
+import '../styles/global.css';
+import { marca, estiloVars, urlFuentes, url } from '../lib/datos';
+
+const { titulo, descripcion } = Astro.props;
+---
+<!doctype html>
+<html lang="es" style={estiloVars}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{titulo}</title>
+    <meta name="description" content={descripcion} />
+    <link rel="icon" href={url(marca.logo)} />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href={urlFuentes} />
+  </head>
+  <body>
+    <a class="salto" href="#productos">Saltar al contenido</a>
+    <slot />
+  </body>
+</html>
