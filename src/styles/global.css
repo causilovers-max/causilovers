@@ -1,98 +1,539 @@
+/* ============================================================
+   RESET Y BASE
+   ============================================================ */
 *, *::before, *::after { box-sizing: border-box; }
 
-html { scroll-behavior: smooth; scroll-padding-top: 1rem; }
-@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+html {
+  scroll-behavior: smooth;
+  /* Compensa la altura del header fijo al saltar a secciones */
+  scroll-padding-top: 4.5rem;
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
 
 body {
   margin: 0;
-  background: var(--fondo);
+  background-color: var(--fondo);
   color: var(--texto);
   font-family: var(--f-cuerpo), system-ui, sans-serif;
   font-size: 1.0625rem;
-  line-height: 1.6;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
 }
 
-h1, h2, h3 {
+h1, h2, h3, h4 {
   margin: 0;
   font-family: var(--f-titulo), system-ui, sans-serif;
   font-weight: 700;
-  line-height: 1.12;
+  line-height: 1.15;
+  text-wrap: balance;
 }
-p { margin: 0; }
-img { max-width: 100%; }
-a { color: inherit; }
-:focus-visible { outline: 3px solid var(--principal); outline-offset: 3px; }
+p  { margin: 0; }
+ul { margin: 0; padding: 0; }
+img { display: block; max-width: 100%; }
+a  { color: inherit; }
 
-.contenedor { width: min(1080px, 100% - 2.5rem); margin-inline: auto; }
+:focus-visible {
+  outline: 3px solid var(--principal);
+  outline-offset: 3px;
+  border-radius: 3px;
+}
 
-.salto { position: absolute; left: -999px; }
-.salto:focus { left: 1rem; top: 1rem; z-index: 10; padding: .5rem 1rem; background: #fff; color: #000; }
+/* ============================================================
+   UTILIDADES
+   ============================================================ */
+.contenedor {
+  width: min(1100px, 100% - 3rem);
+  margin-inline: auto;
+}
 
-/* Botones */
+/* Accesibilidad: saltar al contenido principal */
+.salto {
+  position: absolute;
+  left: -9999px;
+  top: 1rem;
+  z-index: 999;
+  padding: .5rem 1.25rem;
+  background: var(--principal);
+  color: var(--sobre-principal);
+  font-weight: 700;
+  border-radius: var(--radio);
+  text-decoration: none;
+}
+.salto:focus-visible { left: 1rem; }
+
+/* ============================================================
+   BOTONES
+   ============================================================ */
 .boton {
-  display: inline-block;
-  padding: .85rem 1.5rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: .5rem;
+  padding: .8rem 1.75rem;
   border: 2px solid var(--principal);
   border-radius: var(--radio);
   background: var(--principal);
   color: var(--sobre-principal);
+  font-family: inherit;
+  font-size: 1rem;
   font-weight: 700;
   text-decoration: none;
+  cursor: pointer;
+  transition: background .18s ease, border-color .18s ease, color .18s ease,
+              box-shadow .18s ease;
 }
-.boton:hover { background: color-mix(in srgb, var(--principal) 82%, black); }
-.boton-borde { background: transparent; color: var(--texto); border-color: var(--texto); text-align: center; }
-.boton-borde:hover { background: var(--texto); color: var(--fondo); }
-.boton-claro { background: var(--secundario); border-color: var(--secundario); color: var(--sobre-secundario); }
-.boton-claro:hover { background: color-mix(in srgb, var(--secundario) 85%, white); }
+.boton:hover {
+  background: color-mix(in srgb, var(--principal) 82%, #000);
+  border-color: color-mix(in srgb, var(--principal) 82%, #000);
+  box-shadow: 0 4px 14px color-mix(in srgb, var(--principal) 35%, transparent);
+}
 
-/* Encabezado */
-.encabezado { padding: 1rem 0; border-bottom: 1px solid color-mix(in srgb, var(--texto) 14%, transparent); }
-.encabezado .contenedor { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .75rem 2rem; }
-.marca { display: flex; align-items: center; gap: .75rem; text-decoration: none; font-family: var(--f-titulo), sans-serif; font-weight: 700; font-size: 1.25rem; }
-.marca img { height: 48px; width: auto; }
-.menu { display: flex; flex-wrap: wrap; gap: .25rem 1.5rem; }
-.menu a { padding: .25rem 0; border-bottom: 2px solid transparent; text-decoration: none; }
-.menu a:hover { border-bottom-color: var(--principal); }
+/* Variante borde (para tarjetas de productos) */
+.boton-borde {
+  background: transparent;
+  color: var(--texto);
+  border-color: color-mix(in srgb, var(--texto) 35%, transparent);
+}
+.boton-borde:hover {
+  background: var(--texto);
+  color: var(--fondo);
+  border-color: var(--texto);
+  box-shadow: none;
+}
 
-/* Portada */
-.portada { padding: clamp(2.5rem, 7vw, 5.5rem) 0; overflow-x: clip; }
-.portada .contenedor { display: grid; gap: 2.5rem; align-items: center; }
-@media (min-width: 820px) { .portada .contenedor { grid-template-columns: 1.1fr .9fr; gap: 4rem; } }
-.portada h1 { font-size: clamp(2.2rem, 5.5vw, 3.75rem); }
-.portada-texto p { max-width: 46ch; margin: 1.25rem 0 2rem; font-size: 1.2rem; }
-.portada-imagen { position: relative; }
-.portada-imagen::before { content: ""; position: absolute; inset: 1rem -.75rem -1rem .75rem; background: var(--secundario); border-radius: var(--radio); }
-.portada-imagen img { position: relative; display: block; width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover; border-radius: var(--radio); }
+/* Variante clara (para sección de contacto con fondo oscuro) */
+.boton-claro {
+  background: var(--sobre-principal);
+  border-color: var(--sobre-principal);
+  color: var(--principal);
+}
+.boton-claro:hover {
+  background: color-mix(in srgb, var(--sobre-principal) 88%, #000);
+  border-color: color-mix(in srgb, var(--sobre-principal) 88%, #000);
+  box-shadow: 0 4px 14px color-mix(in srgb, #000 20%, transparent);
+}
 
-/* Secciones */
-.seccion { padding: clamp(3rem, 7vw, 5rem) 0; }
-.seccion h2, .contacto h2 { font-size: clamp(1.8rem, 4vw, 2.5rem); }
+/* ============================================================
+   ENCABEZADO STICKY
+   ============================================================ */
+.encabezado {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  padding: .9rem 0;
+  background: color-mix(in srgb, var(--fondo) 92%, transparent);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid color-mix(in srgb, var(--texto) 10%, transparent);
+}
 
-/* Productos */
-.rejilla { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 2.5rem 1.5rem; margin: 2rem 0 0; padding: 0; list-style: none; }
-.producto { display: flex; flex-direction: column; gap: .6rem; }
-.producto-foto { position: relative; }
-.producto-foto img { display: block; width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover; border-radius: var(--radio); }
-.etiqueta { position: absolute; top: .75rem; left: .75rem; padding: .15rem .7rem; border-radius: 999px; background: var(--secundario); color: var(--sobre-secundario); font-size: .9rem; font-weight: 700; }
-.producto-cabecera { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; margin-top: .4rem; }
-.producto h3 { font-size: 1.25rem; }
-.precio { flex: none; padding: .1rem .65rem; border-radius: 999px; background: var(--secundario); color: var(--sobre-secundario); font-weight: 700; }
-.producto p { flex: 1; }
-.producto .boton { margin-top: .4rem; }
+.encabezado .contenedor {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+}
 
-/* Nosotros */
-.nosotros { background: color-mix(in srgb, var(--principal) 9%, var(--fondo)); }
-.nosotros .contenedor { display: grid; gap: 1.5rem 4rem; }
-@media (min-width: 820px) { .nosotros .contenedor { grid-template-columns: 1fr 1.4fr; } }
-.nosotros p { max-width: 62ch; }
-.puntos { margin: 1.5rem 0 0; padding: 0; list-style: none; display: grid; gap: .6rem; }
-.puntos li { padding-left: 1rem; border-left: 4px solid var(--principal); font-weight: 700; }
+/* ---- Logo + nombre ---- */
+.marca {
+  display: flex;
+  align-items: center;
+  gap: .65rem;
+  text-decoration: none;
+  font-family: var(--f-titulo), sans-serif;
+  font-weight: 700;
+  font-size: 1.2rem;
+  flex-shrink: 0;
+  line-height: 1;
+}
+.marca img {
+  height: 40px;
+  width: auto;
+  flex-shrink: 0;
+}
 
-/* Contacto */
-.contacto { padding: clamp(3rem, 7vw, 5rem) 0; background: var(--principal); color: var(--sobre-principal); }
-.contacto .contenedor { display: grid; justify-items: start; gap: 1rem; }
-.contacto h2 { max-width: 22ch; }
-.redes { display: flex; gap: 1.5rem; }
+/* ---- Navegación ---- */
+.menu {
+  display: flex;
+  align-items: center;
+  gap: .2rem 1.25rem;
+  flex-wrap: wrap;
+}
+.menu a {
+  position: relative;
+  padding: .3rem .1rem;
+  font-size: .95rem;
+  font-weight: 600;
+  text-decoration: none;
+  opacity: .8;
+  transition: opacity .15s;
+}
+.menu a::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0;
+  width: 0; height: 2px;
+  background: var(--principal);
+  border-radius: 2px;
+  transition: width .2s ease;
+}
+.menu a:hover         { opacity: 1; }
+.menu a:hover::after  { width: 100%; }
 
-/* Pie */
-.pie { padding: 1.5rem 0; font-size: .95rem; }
+/* ---- Hamburguesa (CSS puro, sin JavaScript) ---- */
+.menu-toggle { display: none; }   /* checkbox invisible */
+
+.menu-icono {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 2.25rem;
+  height: 2.25rem;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+.menu-icono span {
+  display: block;
+  height: 2px;
+  background: var(--texto);
+  border-radius: 2px;
+  transition: transform .25s ease, opacity .2s ease, width .2s ease;
+}
+.menu-icono span:nth-child(3) { width: 65%; }
+
+@media (max-width: 640px) {
+  .menu-icono { display: flex; }
+
+  /* Animación X al abrir */
+  .menu-toggle:checked ~ * .menu-icono span:nth-child(1),
+  .menu-toggle:checked + label span:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+  }
+  .menu-toggle:checked ~ * .menu-icono span:nth-child(2),
+  .menu-toggle:checked + label span:nth-child(2) { opacity: 0; }
+  .menu-toggle:checked ~ * .menu-icono span:nth-child(3),
+  .menu-toggle:checked + label span:nth-child(3) {
+    width: 100%;
+    transform: translateY(-7px) rotate(-45deg);
+  }
+
+  /* El checkbox es sibling del label y del nav en el .contenedor */
+  .menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0; right: 0;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0;
+    padding: .5rem 1.5rem 1rem;
+    background: var(--fondo);
+    border-bottom: 1px solid color-mix(in srgb, var(--texto) 10%, transparent);
+    box-shadow: 0 8px 24px color-mix(in srgb, var(--texto) 8%, transparent);
+  }
+
+  /* Cuando el toggle está marcado, mostrar el menú */
+  .menu-toggle:checked ~ .menu { display: flex; }
+
+  .menu a {
+    width: 100%;
+    padding: .75rem 0;
+    border-bottom: 1px solid color-mix(in srgb, var(--texto) 8%, transparent);
+    opacity: 1;
+  }
+  .menu a:last-child { border-bottom: none; }
+  .menu a::after { display: none; }
+}
+
+/* ============================================================
+   PORTADA / HERO
+   ============================================================ */
+.portada {
+  padding: clamp(3rem, 8vw, 6rem) 0;
+  overflow-x: clip;
+}
+
+.portada .contenedor {
+  display: grid;
+  gap: 3rem;
+  align-items: center;
+}
+
+@media (min-width: 820px) {
+  .portada .contenedor {
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+  }
+}
+
+.portada-texto { display: flex; flex-direction: column; gap: 1.5rem; }
+
+.portada h1 {
+  font-size: clamp(2.25rem, 5.5vw, 3.75rem);
+  letter-spacing: -.02em;
+}
+
+.portada-texto > p {
+  max-width: 44ch;
+  font-size: clamp(1.05rem, 2vw, 1.2rem);
+  opacity: .8;
+  line-height: 1.7;
+}
+
+/* Decoración de la imagen de portada */
+.portada-imagen {
+  position: relative;
+  /* Evita que la sombra decorativa desborde */
+  padding: .5rem;
+}
+.portada-imagen::before {
+  content: '';
+  position: absolute;
+  inset: 1.25rem -1rem -1rem 1rem;
+  background: var(--secundario);
+  border-radius: calc(var(--radio) + 4px);
+  opacity: .6;
+  z-index: 0;
+}
+.portada-imagen img {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: var(--radio);
+  box-shadow: 0 20px 50px color-mix(in srgb, var(--texto) 15%, transparent);
+}
+
+/* ============================================================
+   SECCIONES GENÉRICAS
+   ============================================================ */
+.seccion { padding: clamp(3.5rem, 8vw, 6rem) 0; }
+
+.seccion-cabecera {
+  margin-bottom: 2.5rem;
+}
+.seccion-cabecera h2 {
+  font-size: clamp(1.8rem, 4vw, 2.5rem);
+  letter-spacing: -.02em;
+}
+.seccion-cabecera p {
+  margin-top: .6rem;
+  max-width: 52ch;
+  opacity: .7;
+}
+
+/* Línea decorativa bajo el título de sección */
+.seccion-cabecera h2::after {
+  content: '';
+  display: block;
+  margin-top: .6rem;
+  width: 3rem;
+  height: 4px;
+  background: var(--principal);
+  border-radius: 4px;
+}
+
+/* ============================================================
+   REJILLA DE PRODUCTOS
+   ============================================================ */
+.rejilla {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 2rem 1.5rem;
+  list-style: none;
+}
+
+/* Tarjeta de producto */
+.producto {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  border-radius: var(--radio);
+  background: var(--fondo);
+  box-shadow:
+    0 1px 3px color-mix(in srgb, var(--texto) 8%, transparent),
+    0 4px 16px color-mix(in srgb, var(--texto) 6%, transparent);
+  overflow: hidden;
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+.producto:hover {
+  transform: translateY(-4px);
+  box-shadow:
+    0 4px 8px color-mix(in srgb, var(--texto) 8%, transparent),
+    0 12px 32px color-mix(in srgb, var(--texto) 10%, transparent);
+}
+
+/* Foto del producto */
+.producto-foto { position: relative; overflow: hidden; }
+.producto-foto img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  transition: transform .35s ease;
+}
+.producto:hover .producto-foto img { transform: scale(1.04); }
+
+/* Etiqueta (Nuevo, Oferta, etc.) */
+.etiqueta {
+  position: absolute;
+  top: .75rem; left: .75rem;
+  padding: .2rem .75rem;
+  border-radius: 999px;
+  background: var(--secundario);
+  color: var(--sobre-secundario);
+  font-size: .82rem;
+  font-weight: 700;
+  letter-spacing: .03em;
+  text-transform: uppercase;
+}
+
+/* Cuerpo de la tarjeta */
+.producto-cuerpo {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: .6rem;
+  padding: 1.1rem 1.25rem 1.25rem;
+}
+
+.producto-cabecera {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: .75rem;
+}
+
+.producto h3 {
+  font-size: 1.1rem;
+  line-height: 1.3;
+}
+
+.precio {
+  flex-shrink: 0;
+  padding: .2rem .7rem;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--secundario) 20%, transparent);
+  color: color-mix(in srgb, var(--texto) 90%, var(--principal));
+  font-size: .95rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.producto-desc {
+  font-size: .95rem;
+  opacity: .75;
+  flex: 1;
+  line-height: 1.55;
+}
+
+/* El botón siempre al fondo de la tarjeta */
+.producto .boton {
+  margin-top: auto;
+  width: 100%;
+}
+
+/* ============================================================
+   NOSOTROS
+   ============================================================ */
+.nosotros {
+  background: color-mix(in srgb, var(--principal) 7%, var(--fondo));
+}
+
+.nosotros .contenedor {
+  display: grid;
+  gap: 2rem 5rem;
+  align-items: start;
+}
+
+@media (min-width: 820px) {
+  .nosotros .contenedor { grid-template-columns: 1fr 1.5fr; }
+}
+
+.nosotros h2 {
+  font-size: clamp(1.8rem, 4vw, 2.5rem);
+  letter-spacing: -.02em;
+}
+
+.nosotros-texto p {
+  max-width: 60ch;
+  opacity: .85;
+}
+
+.puntos {
+  list-style: none;
+  display: grid;
+  gap: .75rem;
+  margin-top: 1.5rem;
+}
+
+.puntos li {
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+  font-weight: 600;
+}
+
+.puntos li::before {
+  content: '';
+  flex-shrink: 0;
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  background: var(--principal);
+}
+
+/* ============================================================
+   CONTACTO
+   ============================================================ */
+.contacto {
+  padding: clamp(3.5rem, 8vw, 6rem) 0;
+  background: var(--principal);
+  color: var(--sobre-principal);
+}
+
+.contacto .contenedor {
+  display: grid;
+  gap: 1.5rem;
+  justify-items: start;
+}
+
+.contacto h2 {
+  font-size: clamp(1.8rem, 4vw, 2.5rem);
+  max-width: 24ch;
+  letter-spacing: -.02em;
+}
+
+.contacto-horario {
+  opacity: .85;
+  font-size: 1rem;
+}
+
+.redes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+.redes a {
+  opacity: .85;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  font-weight: 600;
+  transition: opacity .15s;
+}
+.redes a:hover { opacity: 1; }
+
+/* ============================================================
+   PIE DE PÁGINA
+   ============================================================ */
+.pie {
+  padding: 1.5rem 0;
+  font-size: .9rem;
+  border-top: 1px solid color-mix(in srgb, var(--texto) 10%, transparent);
+  opacity: .7;
+  text-align: center;
+}

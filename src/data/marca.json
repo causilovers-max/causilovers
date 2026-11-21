@@ -9,15 +9,15 @@
     "texto": "#1B2430"
   },
   "fuentes": {
-    "titulo": "Bricolage Grotesque",
-    "cuerpo": "Figtree"
+    "titulo": "Nunito",
+    "cuerpo": "Nunito"
   },
   "esquinas": "suaves",
   "portada": {
-    "titulo": "Escribe aquí la frase principal de tu emprendimiento",
+    "titulo": "Marcianos de pura fruta",
     "subtitulo": "Cuenta en una o dos líneas qué vendes y por qué es especial.",
     "imagen": "productos/producto-1.svg",
-    "textoBoton": "Ver productos"
+    "textoBoton": "Ver todos los productos"
   },
   "nosotros": {
     "titulo": "Quiénes somos",
@@ -29,7 +29,7 @@
     ]
   },
   "contacto": {
-    "whatsapp": "51900000000",
+    "whatsapp": "51980528386",
     "mensaje": "Hola, quiero más información sobre sus productos",
     "horario": "Lunes a viernes, de 3:00 p. m. a 6:00 p. m.",
     "instagram": "",

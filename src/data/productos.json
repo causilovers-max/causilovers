@@ -1,10 +1,9 @@
 [
   {
-    "nombre": "Nombre del producto 1",
-    "descripcion": "Escribe aquí una descripción corta y verdadera de tu producto.",
-    "precio": 12.5,
-    "imagen": "productos/producto-1.svg",
-    "etiqueta": "Nuevo"
+    "nombre": "Marciano de Fresa",
+    "descripcion": "Aqui puedes colocar la frase importante",
+    "precio": 2.5,
+    "imagen": "productos/producto-1.svg"
   },
   {
     "nombre": "Nombre del producto 2",

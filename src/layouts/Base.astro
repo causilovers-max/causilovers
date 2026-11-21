@@ -1,9 +1,15 @@
 ---
-import '../styles/global.css';
-import { marca, estiloVars, urlFuentes, url } from '../lib/datos';
+import "../styles/global.css";
+import { estiloVars, urlFuentes, url } from "../lib/datos";
 
-const { titulo, descripcion } = Astro.props;
+interface Props {
+  titulo: string;
+  descripcion: string;
+  favicon: string;      // nombre del archivo del logo, p. ej. "logo.svg"
+}
+const { titulo, descripcion, favicon } = Astro.props;
 ---
+
 <!doctype html>
 <html lang="es" style={estiloVars}>
   <head>
@@ -11,13 +17,18 @@ const { titulo, descripcion } = Astro.props;
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{titulo}</title>
     <meta name="description" content={descripcion} />
-    <link rel="icon" href={url(marca.logo)} />
+    <!-- Open Graph básico -->
+    <meta property="og:title" content={titulo} />
+    <meta property="og:description" content={descripcion} />
+    <meta property="og:type" content="website" />
+    <link rel="icon" href={url(favicon)} />
+    <!-- Fuentes: preconnect primero, luego la hoja de estilos -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="stylesheet" href={urlFuentes} />
   </head>
   <body>
-    <a class="salto" href="#productos">Saltar al contenido</a>
+    <a class="salto" href="#inicio">Saltar al contenido</a>
     <slot />
   </body>
 </html>
